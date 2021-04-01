@@ -8,7 +8,7 @@ describe Rack::OverridePath do
   let(:app) do
     app = Rack::Builder.new do
       use Rack::OverridePath
-      run lambda {|env| [200, { 'Content-Type' => 'text/plain' }, ['Hello World']]}
+      run ->(_env) { [200, { 'Content-Type' => 'text/plain' }, ['Hello World']] }
     end
     app
   end
@@ -48,7 +48,7 @@ describe Rack::OverridePath do
                 data = {
                   'delay' => 1
                 }
-                post '/override/path', data.to_json, "CONTENT_TYPE" => "application/json"
+                post '/override/path', data.to_json, 'CONTENT_TYPE' => 'application/json'
                 expect(last_response.status).to eq 400
               end
             end
@@ -57,7 +57,7 @@ describe Rack::OverridePath do
                 data = {
                   'status' => 808
                 }
-                post '/override/path', data.to_json, "CONTENT_TYPE" => "application/json"
+                post '/override/path', data.to_json, 'CONTENT_TYPE' => 'application/json'
                 expect(last_response.status).to eq 400
               end
             end
@@ -66,7 +66,7 @@ describe Rack::OverridePath do
                 data = {
                   'body' => 'la la la'
                 }
-                post '/override/path', data.to_json, "CONTENT_TYPE" => "application/json"
+                post '/override/path', data.to_json, 'CONTENT_TYPE' => 'application/json'
                 expect(last_response.status).to eq 400
               end
             end
@@ -76,21 +76,15 @@ describe Rack::OverridePath do
               data = {
                 'path' => '.*videos.*'
               }
-              post '/override/path', data.to_json, "CONTENT_TYPE" => "application/json"
+              post '/override/path', data.to_json, 'CONTENT_TYPE' => 'application/json'
               expect(last_response.status).to eq 400
             end
           end
         end
       end
-
-
-
-
     end
     describe 'success' do
-
     end
-
   end
   describe 'override configured'
 end

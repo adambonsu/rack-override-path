@@ -9,6 +9,7 @@ module Rack
     DEFAULT_DELAY = 0
     DEFAULT_HEADERS = {}.freeze
     DEFAULT_STATUS = 200
+    OVERRIDE_KEYS = %w[body headers status].freeze
 
     def initialize(app)
       @app = app
@@ -45,11 +46,11 @@ module Rack
     end
 
     def valid?(payload)
-      payload && payload.has_key?('path') && has_at_least_one_of_these_keys?(payload, %w[body headers status])
+      payload&.key?('path') && at_least_one_override_key?(payload)
     end
 
-    def has_at_least_one_of_these_keys?(payload, expected_keys)
-      !(payload.keys & expected_keys).empty?
+    def at_least_one_override_key?(payload)
+      !(payload.keys & OVERRIDE_KEYS).empty?
     end
 
     def override_path_successful_response(payload)
