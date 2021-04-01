@@ -36,12 +36,20 @@ module Rack
 
     def override_path(req)
       payload = request_body_json(req)
-      if payload
+      if valid?(payload)
         @overridden_paths.prepend(payload)
         override_path_successful_response(payload)
       else
         override_path_failed_response_no_body
       end
+    end
+
+    def valid?(payload)
+      payload && payload.has_key?('path') && has_at_least_one_of_these_keys?(payload, %w[body headers status])
+    end
+
+    def has_at_least_one_of_these_keys?(payload, expected_keys)
+      !(payload.keys & expected_keys).empty?
     end
 
     def override_path_successful_response(payload)
