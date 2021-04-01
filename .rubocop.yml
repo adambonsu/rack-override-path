@@ -1,0 +1,14 @@
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: enable
+
+Layout/LineLength:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Style/Documentation:
+  Enabled: false
