@@ -31,7 +31,7 @@ module Rack
     end
 
     def override_path?(req)
-      req.post? && req.path == '/override'
+      req.post? && req.path == '/override/path'
     end
 
     def override_path(req)
