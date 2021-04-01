@@ -9,7 +9,7 @@ module Rack
     DEFAULT_DELAY = 0
     DEFAULT_HEADERS = {}.freeze
     DEFAULT_STATUS = 200
-    OVERRIDE_KEYS = %w[body headers status].freeze
+    OVERRIDE_KEYS = %w[body delay headers status].freeze
 
     def initialize(app)
       @app = app
