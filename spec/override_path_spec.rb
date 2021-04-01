@@ -13,7 +13,7 @@ describe Rack::OverridePath do
     app
   end
 
-  context 'no override configured' do
+  context 'No override configured' do
     it 'returns successful response' do
       get '/path/to/somewhere'
       expect(last_response.status).to eq 200
