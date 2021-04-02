@@ -134,5 +134,4 @@ describe Rack::OverridePath do
       it 'override listed'
     end
   end
-
 end
