@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name                  = 'rack-override-path'
-  s.version               = '0.0.1'
+  s.version               = '0.0.2'
   s.summary               = 'Rack middleware that overrides responses for web applications'
   s.description           = 'A Rack middleware gem that overrides responses for web applications'
   s.authors               = ['Adam Bonsu']
