@@ -1,2 +1,2 @@
-gem build overrider.gemspec
-gem install ./overrider-0.0.1.gem
+gem build rack-override-path.gemspec
+gem install ./rack-override-path-0.0.1.gem

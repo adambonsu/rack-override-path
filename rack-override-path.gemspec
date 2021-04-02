@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.description           = 'A Rack middleware gem that overrides responses for web applications'
   s.authors               = ['Adam Bonsu']
   s.email                 = 'adam@bonsu.io'
-  s.files                 = ['lib/override_path.rb']
+  s.files                 = %w[lib/override_path.rb lib/rack/override_path.rb lib/rack/override-path.rb]
   s.homepage              = 'https://github.com/adambonsu/rack-override-path'
   s.license               = 'MIT'
   s.required_ruby_version = '>= 2.7.0'
