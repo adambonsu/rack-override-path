@@ -1,4 +1,5 @@
 Add readme
+
 override parameter => method: GET, PUT, POST, PATCH, DELETE, HEAD, OPTIONS
 create tests: see examples here: https://github.com/ryooo/rack-override-user-agent/blob/master/test/override_user_agent_test.rb
 create a DELETE /override/path endpoint and a DELETE /override/paths endpoint
@@ -6,3 +7,4 @@ create a DELETE /override/path endpoint and a DELETE /override/paths endpoint
 could potentially configure routes via config.ru:
     https://github.com/ryooo/rack-override-user-agent/search?q=repo%3Aryooo%2Frack-override-user-agent+params_key+in%3Afile
     https://github.com/ryooo/rack-override-user-agent/blob/ed64529ad380d95cc9646d4d6f8ddb8d521fe86b/lib/rack/override_user_agent.rb#L5
+    See how config was done here: https://github.com/cyu/rack-cors

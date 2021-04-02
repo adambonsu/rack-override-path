@@ -5,7 +5,7 @@ Body
 
 ## Examples
 
-POST http://localhost:8080/override
+POST http://localhost:8080/override/path
 {
   "delay": 2,
   "status": 404,

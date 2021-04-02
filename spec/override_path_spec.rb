@@ -20,7 +20,7 @@ describe Rack::OverridePath do
       expect(last_response.body).to eq 'Hello World'
     end
   end
-  context 'Overrides configured' do
+  xcontext 'Overrides configured' do
     context 'request overridden path' do
       context 'literal path match' do
         context 'literal path' do
@@ -154,8 +154,21 @@ describe Rack::OverridePath do
         expect(JSON.parse(last_response.body)).to be_empty
       end
     end
-    context 'override configured' do
-      it 'override listed'
+    xcontext 'override configured' do
+      context 'one override configured' do
+        let(:override) { { 'path' => '.*videos.*' } }
+
+        it 'override listed' do
+          post '/override/path', override.to_json
+          get '/override/path'
+          expect(last_response.status).to eq 200
+          expect(JSON.parse(last_response.body)).to eq override
+        end
+      end
+      context 'multiple overrides configured' do
+        it 'overrides listed'
+        it 'overrides stacked - last override at the top'
+      end
     end
   end
 end

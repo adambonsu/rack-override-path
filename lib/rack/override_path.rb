@@ -34,15 +34,26 @@ module Rack
     end
 
     def get_overrides(_req)
-      [200, { 'Content-Type' => 'application/json' }, ['[]']]
+      [200, { 'Content-Type' => 'application/json' }, [@overridden_paths.to_json]]
     end
 
     def override(path)
-      @overridden_paths.find { |override| path.match(Regexp.new(override['path'])) }
+      @overridden_paths.find do |override|
+        override_path = literal_path?(override['path']) ? literal_path(override['path']) : override['path']
+        path.match(Regexp.new(override_path))
+      end
+    end
+
+    def literal_path?(path)
+      path[0] == '/' ? true : false
+    end
+
+    def literal_path(path)
+      "^#{path}$"
     end
 
     def override_path?(req)
-      req.post? && req.path == '/override/path'
+      req.path == '/override/path' && req.post?
     end
 
     def override_path(req)
@@ -72,7 +83,6 @@ module Rack
     end
 
     def path_overridden?(path)
-      puts "DEBUG: path_overridden?(#{path}): #{@overridden_paths.inspect}"
       override(path).nil? ? false : true
     end
 
@@ -91,8 +101,12 @@ module Rack
       response_status = override['status'] || status || DEFAULT_STATUS
       response_headers = override['headers'] || headers || DEFAULT_HEADERS
       response_body = override['body'] || body || DEFAULT_BODY
-      response_body = Array(response_body)
-      [response_status, response_headers, response_body]
+      [response_status, response_headers, prepare_response_body_for_rack(response_body)]
+    end
+
+    def prepare_response_body_for_rack(response_body)
+      response_body = response_body.is_a?(Hash) ? response_body.to_json : response_body
+      response_body.is_a?(Array) ? response_body : [response_body]
     end
 
     def request(env)
