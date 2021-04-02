@@ -45,7 +45,7 @@ module Rack
     end
 
     def literal_path?(path)
-      path[0] == '/' ? true : false
+      path[0] == '/'
     end
 
     def literal_path(path)
