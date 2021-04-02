@@ -20,8 +20,8 @@ describe Rack::OverridePath do
       expect(last_response.body).to eq 'Hello World'
     end
   end
-  context 'Configure override' do
-    describe 'Failures' do
+  describe 'POST /override/path' do
+    context 'Failures' do
       context 'No body' do
         it '400 - bad config' do
           post '/override/path'
@@ -90,7 +90,7 @@ describe Rack::OverridePath do
         end
       end
     end
-    describe 'success' do
+    context 'Success' do
       context 'Body in json format with path and at least one override parameter' do
         context 'Path parameter specified' do
           let(:data) { { 'path' => '.*videos.*' } }
@@ -126,5 +126,13 @@ describe Rack::OverridePath do
       end
     end
   end
-  context 'override configured'
+  describe 'GET /override/path' do
+    context 'override not configured' do
+      it 'no overrides listed'
+    end
+    context 'override configured' do
+      it 'override listed'
+    end
+  end
+
 end
