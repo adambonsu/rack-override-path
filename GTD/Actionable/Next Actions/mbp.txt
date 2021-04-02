@@ -1,4 +1,3 @@
-create rack-override-path gem, push to gem repo
 Add readme
 override parameter => method: GET, PUT, POST, PATCH, DELETE, HEAD, OPTIONS
 create tests: see examples here: https://github.com/ryooo/rack-override-user-agent/blob/master/test/override_user_agent_test.rb
