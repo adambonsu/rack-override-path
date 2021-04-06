@@ -26,14 +26,18 @@ describe Rack::OverridePath do
   let(:app) { MockRackApp.new }
   subject { Rack::OverridePath.new(app) }
   let(:request) { Rack::MockRequest.new(subject) }
+  let(:default_rack_environment) { Rack::MockRequest::DEFAULT_ENV }
+  let(:default_app_response) {  MockRackApp.new.call(default_rack_environment) }
+  let(:default_app_response_status) { default_app_response[0] }
+  let(:default_app_response_headers) { default_app_response[1] }
+  let(:default_app_response_body) { default_app_response[2].join }
 
   context 'No override configured' do
     it 'Returns web app response' do
-      # to do: improve - check app response without overrides
-      # confirm that no overrides configured also
       response = request.get('/path/to/somewhere')
-      expect(response.status).to eq 200
-      expect(response.body).to eq 'OK'
+      expect(response.status).to eq default_app_response_status
+      expect(response.headers).to eq default_app_response_headers
+      expect(response.body).to eq default_app_response_body
     end
   end
   context 'Override configured' do
@@ -71,11 +75,10 @@ describe Rack::OverridePath do
     end
     context 'Request path that has not been overridden' do
       it 'Returns web app response' do
-        # to do: improve - check app response without overrides
-        # confirm that no overrides configured also
         response = request.get('/path/to/somewhere')
-        expect(response.status).to eq 200
-        expect(response.body).to eq 'OK'
+        expect(response.status).to eq default_app_response_status
+        expect(response.headers).to eq default_app_response_headers
+        expect(response.body).to eq default_app_response_body
       end
     end
   end
