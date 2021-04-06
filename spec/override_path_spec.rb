@@ -20,26 +20,6 @@ describe Rack::OverridePath do
       expect(last_response.body).to eq 'Hello World'
     end
   end
-  xcontext 'Overrides configured' do
-    context 'request overridden path' do
-      context 'literal path match' do
-        context 'literal path' do
-          it 'returns overridden response' do
-            data = {
-              'status' => 206,
-              'path' => 'index.html'
-            }
-            post '/override/path', data.to_json, 'CONTENT_TYPE' => 'application/json'
-
-            get '/index.html'
-            expect(last_response.status).to eq 206
-          end
-        end
-      end
-      context 'regex path match'
-    end
-    context 'request path that has not been overridden'
-  end
   describe 'POST /override/path' do
     context 'Failures' do
       context 'No body' do
@@ -143,31 +123,6 @@ describe Rack::OverridePath do
             end
           end
         end
-      end
-    end
-  end
-  describe 'GET /override/path' do
-    context 'override not configured' do
-      it 'no overrides listed' do
-        get '/override/path'
-        expect(last_response.status).to eq 200
-        expect(JSON.parse(last_response.body)).to be_empty
-      end
-    end
-    xcontext 'override configured' do
-      context 'one override configured' do
-        let(:override) { { 'path' => '.*videos.*' } }
-
-        it 'override listed' do
-          post '/override/path', override.to_json
-          get '/override/path'
-          expect(last_response.status).to eq 200
-          expect(JSON.parse(last_response.body)).to eq override
-        end
-      end
-      context 'multiple overrides configured' do
-        it 'overrides listed'
-        it 'overrides stacked - last override at the top'
       end
     end
   end
