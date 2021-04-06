@@ -79,7 +79,7 @@ describe Rack::OverridePath do
             end
           end
         end
-        context 'Body not specifying at least one an override parameter' do
+        context 'Body not specifying at least one override parameter' do
           it '400 - bad config' do
             data = {
               'path' => '.*videos.*'
