@@ -14,7 +14,7 @@ class MockRackApp
   def call(env)
     @env = env
     @request_body = env['rack.input'].read
-    [200, {'Content-Type' => 'text/plain'}, ['OK']]
+    [200, { 'Content-Type' => 'text/plain' }, ['OK']]
   end
 
   def [](key)
@@ -27,7 +27,7 @@ describe Rack::OverridePath do
   subject { Rack::OverridePath.new(app) }
   let(:request) { Rack::MockRequest.new(subject) }
   let(:default_rack_environment) { Rack::MockRequest::DEFAULT_ENV }
-  let(:default_app_response) {  MockRackApp.new.call(default_rack_environment) }
+  let(:default_app_response) { MockRackApp.new.call(default_rack_environment) }
   let(:default_app_response_status) { default_app_response[0] }
   let(:default_app_response_headers) { default_app_response[1] }
   let(:default_app_response_body) { default_app_response[2].join }
@@ -85,7 +85,7 @@ describe Rack::OverridePath do
   describe 'GET /override/path' do
     context 'No Overrides configured' do
       it 'Empty Overrides list' do
-        response = request.get'/override/path'
+        response = request.get '/override/path'
         expect(response.status).to eq 200
         expect(JSON.parse(response.body)).to be_empty
       end
