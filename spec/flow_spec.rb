@@ -151,7 +151,7 @@ describe Rack::OverridePath do
         expect(configured_override['method']).to eq override['method']
       end
       it 'Response to Overridden Method Request is overridden' do
-        response = request.send( overridden_method.downcase.to_sym, override['path'])
+        response = request.send(overridden_method.downcase.to_sym, override['path'])
         expect(response.status).to eq overridden_status
       end
       it 'Non-Overridden Method Requests return App response' do
