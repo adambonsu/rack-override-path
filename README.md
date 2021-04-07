@@ -15,6 +15,17 @@ gem 'rack-override-path'
 
 ## How to use
 
+## Example webserver setup using webrick
+```
+require 'rack/override-path'
+require 'webrick'
+
+app = lambda do |_env|
+[200, { 'Content-Type' => 'text/plain' }, ['Hello World']]
+end
+
+Rack::Handler::WEBrick.run Rack::OverridePath.new(app)
+```
 
 ### Configure Override Response
 Specify a `path`, with one or more Override Parameters.
@@ -66,15 +77,9 @@ GET /override/path
 ]
 ```
 
-
-## Example webserver setup using webrick
+### Delete all Overridden Responses
+#### Example
 ```
-require 'rack/override-path'
-require 'webrick'
-
-app = lambda do |_env|
-[200, { 'Content-Type' => 'text/plain' }, ['Hello World']]
-end
-
-Rack::Handler::WEBrick.run Rack::OverridePath.new(app)
+DELETE /override/path
+[]
 ```

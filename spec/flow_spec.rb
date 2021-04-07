@@ -201,7 +201,7 @@ describe Rack::OverridePath do
   end
   describe 'GET /override/path' do
     context 'No Overrides configured' do
-      it 'Empty Overrides list' do
+      it 'Overrides list is empty' do
         response = request.get '/override/path'
         expect(response.status).to eq 200
         expect(JSON.parse(response.body)).to be_empty
@@ -215,7 +215,7 @@ describe Rack::OverridePath do
           expect(response.status).to eq 200
         end
 
-        it 'Override listed' do
+        it 'One Override listed' do
           response = request.get '/override/path'
           expect(response.status).to eq 200
           expect(JSON.parse(response.body)).to eq [override]
@@ -234,6 +234,45 @@ describe Rack::OverridePath do
           response = request.get '/override/path'
           expect(response.status).to eq 200
           expect(JSON.parse(response.body)).to eq overrides.reverse
+        end
+      end
+    end
+  end
+  describe 'DELETE /override/path' do
+    it 'Returns status 200' do
+      response = request.delete '/override/path'
+
+      expect(response.status).to eq 200
+      expect(JSON.parse(response.body)).to be_empty
+    end
+    context 'No Overrides configured' do
+      context 'Subsequent GET /override/path' do
+        it 'Overrides list is empty' do
+          request.delete '/override/path'
+
+          response = request.get '/override/path'
+          expect(response.status).to eq 200
+          expect(JSON.parse(response.body)).to be_empty
+        end
+      end
+    end
+    context 'Override configured' do
+      let(:override) { { 'status' => '999', 'path' => '.*videos.*' } }
+      before do
+        response = request.post '/override/path', input: override.to_json
+        expect(response.status).to eq 200
+
+        response = request.get '/override/path'
+        expect(JSON.parse(response.body).size).not_to be_zero
+      end
+
+      context 'Subsequent GET /override/path' do
+        it 'Overrides list is empty' do
+          request.delete '/override/path'
+
+          response = request.get '/override/path'
+          expect(response.status).to eq 200
+          expect(JSON.parse(response.body)).to be_empty
         end
       end
     end

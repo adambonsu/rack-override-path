@@ -9,6 +9,7 @@ module Rack
     DEFAULT_DELAY = 0
     DEFAULT_HEADERS = {}.freeze
     DEFAULT_STATUS = 200
+    OVERRIDE_ENDPOINT = '/override/path'.freeze
     OVERRIDE_KEYS = %w[body delay headers status].freeze
 
     def initialize(app)
@@ -24,9 +25,20 @@ module Rack
         handle_override(req.path, env)
       elsif get_override?(req)
         get_override(req)
+      elsif delete_overrides?(req)
+        delete_overrides(req)
       else
         @app.call(env)
       end
+    end
+
+    def delete_overrides(req)
+      @overridden_paths.clear
+      get_override(req)
+    end
+
+    def delete_overrides?(req)
+      override_endpoint?(req) && req.delete?
     end
 
     def override_matches_method?(req)
@@ -34,8 +46,12 @@ module Rack
       o['method'].nil? ? true : o['method'].downcase == req.request_method.downcase
     end
 
+    def override_endpoint?(req)
+      req.path == '/override/path'
+    end
+
     def get_override?(req)
-      req.path == '/override/path' && req.get?
+      override_endpoint?(req) && req.get?
     end
 
     def get_override(_req)
@@ -58,7 +74,7 @@ module Rack
     end
 
     def override_path?(req)
-      req.path == '/override/path' && req.post?
+      override_endpoint?(req) && req.post?
     end
 
     def override_path(req)

@@ -6,8 +6,11 @@ For info on how to format all future additions to this file please reference [Ke
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.2.0] - 2020-04-07
 ### Added
 - Changelog reference in gem [@adambonsu](https://github.com/adambonsu).
+- Delete all configured Overrides with `DELETE /override/path` [@adambonsu](https://github.com/adambonsu).
 
 ## [0.1.0] - 2020-04-07
 ### Added
@@ -32,7 +35,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Override Parameters: `body`, `delay`, `headers`, `status` [@adambonsu](https://github.com/adambonsu).
 
 
-[Unreleased]: https://github.com/adambonsu/rack-override-path/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/adambonsu/rack-override-path/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/adambonsu/rack-override-path/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/adambonsu/rack-override-path/compare/v0.0.2...v0.1.0
 [0.0.2]: https://github.com/adambonsu/rack-override-path/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/adambonsu/rack-override-path/v0.0.1
