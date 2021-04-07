@@ -112,8 +112,18 @@ describe Rack::OverridePath do
       end
     end
     context 'Body overridden' do
-      it 'Override contains configured Body'
-      it 'Response to Overridden Request contains configured Body'
+      before do
+        override['body'] = 'Jambo jambo'
+        configure_override(override)
+      end
+      it 'Override contains configured Body' do
+        configured_override = JSON.parse(configured_override_for(override['path'])).first
+        expect(configured_override['body']).to eq override['body']
+      end
+      it 'Response to Overridden Request contains configured Body' do
+        response = request.get override['path']
+        expect(response.body).to eq override['body']
+      end
     end
     context 'Status overridden' do
       it 'Override contains configured Status'
