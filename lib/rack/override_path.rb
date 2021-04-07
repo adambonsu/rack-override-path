@@ -22,18 +22,18 @@ module Rack
         override_path(req)
       elsif path_overridden?(req.path)
         handle_override(req.path, env)
-      elsif get_overrides?(req)
-        get_overrides(req)
+      elsif get_override?(req)
+        get_override(req)
       else
         @app.call(env)
       end
     end
 
-    def get_overrides?(req)
+    def get_override?(req)
       req.path == '/override/path' && req.get?
     end
 
-    def get_overrides(_req)
+    def get_override(_req)
       [200, { 'Content-Type' => 'application/json' }, [@overridden_paths.to_json]]
     end
 

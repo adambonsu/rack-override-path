@@ -22,6 +22,9 @@ class MockRackApp
   end
 end
 
+
+
+
 describe Rack::OverridePath do
   let(:app) { MockRackApp.new }
   subject { Rack::OverridePath.new(app) }
@@ -32,6 +35,19 @@ describe Rack::OverridePath do
   let(:default_app_response_headers) { default_app_response[1] }
   let(:default_app_response_body) { default_app_response[2].join }
 
+  def configure_override(override)
+    response = request.post('/override/path', input: override.to_json)
+    expect(response.status).to eq 200
+    response
+  end
+
+  def configured_override_for(path)
+    override = { 'path' => path }
+    response = request.get('/override/path', input: override.to_json)
+    expect(response.status).to eq 200
+    response.body
+  end
+
   context 'No override configured' do
     it 'Returns web app response' do
       response = request.get('/path/to/somewhere')
@@ -41,9 +57,48 @@ describe Rack::OverridePath do
     end
   end
   context 'Override configured' do
-    let(:overridden_status) { 206 }
-    let(:override) { { 'status' => overridden_status } }
+    let(:override) { { 'path' => '/index.html' } }
+    context 'Delay overridden by 5 seconds' do
+      let(:overridden_delay) { 5 }
+      before do
+        override['delay'] = overridden_delay
+        configure_override(override)
+      end
+      it '5 second Delay Overridden for Specified Path' do
+        expect(JSON.parse(configured_override_for(override['path'])).first['delay']).to eq overridden_delay
+      end
+      it 'Response to Overridden Request takes about 5 seconds to respond'
+    end
+    context 'Headers overridden' do
+      context 'No Headers configured' do
+        it 'Override Headers is empty'
+        it 'Response to Overridden Request has no Headers'
+      end
+      context 'Single Header configured' do
+        it 'Override has one Header'
+        it 'Response to Overridden Request contains configured Header'
+      end
+      context 'Multiple Headers configured' do
+        it 'Override contains configured Headers'
+        it 'Response to Overridden Request contains configured Headers'
+      end
+    end
+    context 'Body overridden' do
+      it 'Override contains configured Body'
+      it 'Response to Overridden Request contains configured Body'
+    end
+    context 'Status overridden' do
+      it 'Override contains configured Status'
+      it 'Response to Overridden Request contains configured Status'
+    end
+    context 'Method overridden' do
+      it 'Override contains configured Method'
+      it 'Response to Overridden Method Request is overridden'
+      it 'Non-Overridden Method Requests return App response'
+    end
     context 'Request overridden path' do
+      let(:overridden_status) { 206 }
+      let(:override) { { 'status' => overridden_status } }
       context 'Literal path match' do
         context 'Literal path' do
           before do
