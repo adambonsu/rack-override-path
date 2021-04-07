@@ -22,9 +22,6 @@ class MockRackApp
   end
 end
 
-
-
-
 describe Rack::OverridePath do
   let(:app) { MockRackApp.new }
   subject { Rack::OverridePath.new(app) }
@@ -85,7 +82,7 @@ describe Rack::OverridePath do
       end
       context 'Single Header configured' do
         before do
-          override['headers'] = {'Content-Type' => 'application/json'}
+          override['headers'] = { 'Content-Type' => 'application/json' }
           configure_override(override)
         end
         it 'Override has one Header' do
@@ -100,7 +97,7 @@ describe Rack::OverridePath do
       end
       context 'Multiple Headers configured' do
         before do
-          override['headers'] = {'Content-Type' => 'application/json', 'Content-Encoding' => 'gzip' }
+          override['headers'] = { 'Content-Type' => 'application/json', 'Content-Encoding' => 'gzip' }
           configure_override(override)
         end
         it 'Override contains configured Headers' do
