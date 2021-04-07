@@ -126,8 +126,18 @@ describe Rack::OverridePath do
       end
     end
     context 'Status overridden' do
-      it 'Override contains configured Status'
-      it 'Response to Overridden Request contains configured Status'
+      before do
+        override['status'] = 999
+        configure_override(override)
+      end
+      it 'Override contains configured Status' do
+        configured_override = JSON.parse(configured_override_for(override['path'])).first
+        expect(configured_override['status']).to eq override['status']
+      end
+      it 'Response to Overridden Request contains configured Status' do
+        response = request.get override['path']
+        expect(response.status).to eq override['status']
+      end
     end
     context 'Method overridden' do
       it 'Override contains configured Method'
