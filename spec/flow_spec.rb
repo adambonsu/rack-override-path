@@ -84,8 +84,19 @@ describe Rack::OverridePath do
         end
       end
       context 'Single Header configured' do
-        it 'Override has one Header'
-        it 'Response to Overridden Request contains configured Header'
+        before do
+          override['headers'] = {'Content-Type' => 'application/json'}
+          configure_override(override)
+        end
+        it 'Override has one Header' do
+          configured_override = JSON.parse(configured_override_for(override['path'])).first
+          expect(configured_override['headers'].size).to eq 1
+          expect(configured_override['headers']).to eq override['headers']
+        end
+        it 'Response to Overridden Request contains configured Header' do
+          response = request.get override['path']
+          expect(response.headers).to eq override['headers']
+        end
       end
       context 'Multiple Headers configured' do
         it 'Override contains configured Headers'
