@@ -71,8 +71,17 @@ describe Rack::OverridePath do
     end
     context 'Headers overridden' do
       context 'No Headers configured' do
-        it 'Override Headers is empty'
-        it 'Response to Overridden Request has no Headers'
+        before do
+          override['headers'] = {}
+          configure_override(override)
+        end
+        it 'Override Headers is empty' do
+          expect(JSON.parse(configured_override_for(override['path'])).first['headers']).to be_empty
+        end
+        it 'Response to Overridden Request has no Headers' do
+          response = request.get override['path']
+          expect(response.headers).to be_empty
+        end
       end
       context 'Single Header configured' do
         it 'Override has one Header'
