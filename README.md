@@ -48,6 +48,25 @@ At least one Override Parameter must be included in each Configured Override
 Filters are optional
 * `method` - acceptable values are `GET`,`PUT`, `POST`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`. If `method` parameter is not specified, all methods for the matching `path` are overridden
 
+### List Overridden Responses
+#### Example
+```
+GET /override/path
+[
+    {
+        "delay": 2,
+        "headers": {
+            "Content-Type": "text/plain"
+        },
+        "status": 404,
+        "body": "Nothing found",
+        "method": "GET",
+        "path": "/index.html"
+    }
+]
+```
+
+
 ## Example webserver setup using webrick
 ```
 require 'rack/override-path'
