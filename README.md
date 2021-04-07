@@ -14,8 +14,13 @@ gem 'rack-override-path'
 ```
 
 ## How to use
-### Configure path
+
+
+### Configure Override Response
 Specify a `path`, with one or more Override Parameters.
+
+Subsequent requests matching `path` will be overridden.
+#### Example
 ```
 POST /override/path
 {
@@ -23,15 +28,25 @@ POST /override/path
   "headers": { "Content-Type": "text/plain" },
   "status": 404,
   "body": "Nothing found",
+  "method": "GET",
   "path": "/index.html"
 }
 ```
-Subsequent requests matching `path` will be overridden.
-In the example above, requests for `/index.html` will respond with a `404` status with `Nothing found` in the body after a `2` second delay
+In the example above, `GET` requests for `/index.html` will respond with a `404` status with `Nothing found` in the body after a `2` second delay
 
 The `path` can be literal (e.g `/index.html`) or a regular expression (e.g `.*videos.*`)
-Available Override Parameters: `delay`, `status`, `headers`, `body`
 
+#### Available Override Parameters
+At least one Override Parameter must be included in each Configured Override 
+* `body`
+* `delay` - should be an Integer value, in seconds
+* `headers`
+* `status` - should be an Integer value
+
+
+#### Available Filters
+Filters are optional
+* `method` - acceptable values are `GET`,`PUT`, `POST`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`. If `method` parameter is not specified, all methods for the matching `path` are overridden
 
 ## Example webserver setup using webrick
 ```

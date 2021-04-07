@@ -1,4 +1,4 @@
-update readme for override parameter feature => method: GET, PUT, POST, PATCH, DELETE, HEAD, OPTIONS
+update readme for example set up - sinatra, rails, thin, etc
 create tests: see examples here: https://github.com/ryooo/rack-override-user-agent/blob/master/test/override_user_agent_test.rb
 create a DELETE /override/path endpoint and a DELETE /override/paths endpoint
 
