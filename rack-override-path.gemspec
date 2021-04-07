@@ -12,6 +12,6 @@ Gem::Specification.new do |s|
   s.license               = 'MIT'
   s.required_ruby_version = '>= 2.7.0'
   s.metadata              = {
-    'changelog_uri'     => 'https://github.com/adambonsu/rack-override-path/blob/main/CHANGELOG.md'
+    'changelog_uri' => 'https://github.com/adambonsu/rack-override-path/blob/main/CHANGELOG.md'
   }
 end

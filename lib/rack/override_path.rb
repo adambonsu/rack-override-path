@@ -9,7 +9,7 @@ module Rack
     DEFAULT_DELAY = 0
     DEFAULT_HEADERS = {}.freeze
     DEFAULT_STATUS = 200
-    OVERRIDE_ENDPOINT = '/override/path'.freeze
+    OVERRIDE_ENDPOINT = '/override/path'
     OVERRIDE_KEYS = %w[body delay headers status].freeze
 
     def initialize(app)
