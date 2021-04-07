@@ -11,4 +11,7 @@ Gem::Specification.new do |s|
   s.homepage              = 'https://github.com/adambonsu/rack-override-path'
   s.license               = 'MIT'
   s.required_ruby_version = '>= 2.7.0'
+  s.metadata              = {
+    'changelog_uri'     => 'https://github.com/adambonsu/rack-override-path/blob/main/CHANGELOG.md'
+  }
 end
