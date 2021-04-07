@@ -1,4 +1,5 @@
 include delay test that does not slow down test suite (timecop perhaps?)
+    Timecop not working - need to override sleep during testing: https://stackoverflow.com/questions/25803504/speed-up-sleep-in-ruby
 update readme for example set up - sinatra, rails, thin, etc
 create tests: see examples here: https://github.com/ryooo/rack-override-user-agent/blob/master/test/override_user_agent_test.rb
 

@@ -64,7 +64,12 @@ describe Rack::OverridePath do
       it '5 second Delay Overridden for Specified Path' do
         expect(JSON.parse(configured_override_for(override['path'])).first['delay']).to eq overridden_delay
       end
-      it 'Response to Overridden Request takes about 5 seconds to respond'
+      it 'Response to Overridden Request takes about 5 seconds to respond', :slow do
+        time_before_request = Time.now
+        _response = request.get override['path']
+        time_after_request = Time.now
+        expect(time_after_request - time_before_request).to be > override['delay']
+      end
     end
     context 'Headers overridden' do
       context 'No Headers configured' do
