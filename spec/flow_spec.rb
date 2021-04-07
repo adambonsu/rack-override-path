@@ -140,9 +140,23 @@ describe Rack::OverridePath do
       end
     end
     context 'Method overridden' do
-      it 'Override contains configured Method'
-      it 'Response to Overridden Method Request is overridden'
-      it 'Non-Overridden Method Requests return App response'
+      let(:overridden_method) { 'POST' }
+      let(:overridden_status) { 808 }
+      before do
+        override.merge!({ 'method' => overridden_method, 'status' => overridden_status })
+        configure_override(override)
+      end
+      it 'Override contains configured Method' do
+        configured_override = JSON.parse(configured_override_for(override['path'])).first
+        expect(configured_override['method']).to eq override['method']
+      end
+      it 'Response to Overridden Method Request is overridden' do
+        response = request.send( overridden_method.downcase.to_sym, override['path'])
+        expect(response.status).to eq overridden_status
+      end
+      it 'Non-Overridden Method Requests return App response' do
+        expect(request.get(override['path']).status).to eq 200
+      end
     end
     context 'Request overridden path' do
       let(:overridden_status) { 206 }

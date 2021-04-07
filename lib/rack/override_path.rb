@@ -20,13 +20,18 @@ module Rack
       req = request(env)
       if override_path?(req)
         override_path(req)
-      elsif path_overridden?(req.path)
+      elsif path_overridden?(req.path) && override_matches_method?(req)
         handle_override(req.path, env)
       elsif get_override?(req)
         get_override(req)
       else
         @app.call(env)
       end
+    end
+
+    def override_matches_method?(req)
+      o = override(req.path)
+      o['method'].nil? ? true : o['method'].downcase == req.request_method.downcase
     end
 
     def get_override?(req)
