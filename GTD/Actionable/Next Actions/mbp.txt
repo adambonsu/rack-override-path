@@ -1,3 +1,4 @@
+ci/cd pipeline
 include delay test that does not slow down test suite (timecop perhaps?)
     Timecop not working - need to override sleep during testing: https://stackoverflow.com/questions/25803504/speed-up-sleep-in-ruby
 update readme for example set up - sinatra, rails, thin, etc
